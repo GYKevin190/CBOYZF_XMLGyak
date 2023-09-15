@@ -1,16 +1,89 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
 
 <head>
-    <title>
-        adatbazis
-    </title>
     <meta charset="UTF-8">
-</head> 
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
 
+        nav li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        body {
+            background-image: url("background.png");
+            margin: 20px;
+            padding: 0;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        a.link {
+            color: white;
+            text-decoration: underline;
+            font-weight: bold;
+            font-size: x-large;
+        }
+
+        footer {
+            position: absolute;
+            width: 100%;
+            bottom: 0px;
+            text-align: center;
+            font-size: large;
+        }
+    </style>
+</head>
 
 <body>
-esdsdsd
+    <div style="display: flex; justify-content: center">
+        <a href="index.html">
+            <img src="uni.png" alt="This should not be here">
+        </a>
+    </div>
+
+    <div style="display: flex; margin: 30px 70px 70px 50px; justify-content: center; gap:20%">
+        <a class="link" href="adatbazis.html">Adatbázisrendszerek</a>
+        <a class="link" href="html5.html">HTML 5 nyelv alapjai</a>
+        <a class="link" href="prezentacio.html">Prezentáció készítés</a>
+    </div>
+
+    <main style="margin-left: 30px; margin-right: 30px;">
+        <div style="display: flex; justify-content: space-between; gap:20%">
+            <div>
+                <h1>Adatbázis készítése</h1>
+                <div style="margin-bottom: 50px;">
+                    Ez a tantárgy az adatbázis készítés alapjait tartalmazza.
+                </div>
+                <b>Tartalom</b><br>
+                <ul>
+                    <li>Az adatbázis-kezelő felelőssége</li>
+                    <li>Az adatbázis entitásai</li>
+                    <li>Az adatbázis-kezelő rendszerek funkciói</li>
+                    <li>Az adattáblák kezelése, kulcs fogalma</li>
+                    <li>Adattáblák kezelése és a kulcsfontosságú fogalmak</li>
+                    <li>Adattábla megjelenítése, formázása</li>
+                    <li>Statisztikai számítások a táblában</li>
+                    <li>Automatikus és speciális űrlapokkal történő keresés</li>
+                    <li>Lekérdezések: választó, törlő, frissítő stb.</li>
+                    <li>Adattáblák létrehozása és összekapcsolása</li>
+                    <li>Táblák feltöltése</li>
+                </ul>
+            </div>
+            <div style="padding-top: 50px;"><img style="width: 570px" src="database.jpg" alt="This should not be here">
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Gyáni Kevin Zsolt CBOYZF 2023.09.14</p>
+    </footer>
 </body>
 
 </html>
