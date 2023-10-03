@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<konferencia>
+    <cim> Az XML fontossága az adatkezelés szempontjából </cim>
+    <hallgatók>
+        <hallgató>
+            <név> Gőz Ferenc </név>
+            <lakcím> Steam u. 23 </lakcím>
+        </hallgató>
+        <hallgató>
+            <név> Kis Ádám </név>
+            <lakcím> Gesztenye u. 10 </lakcím>
+        </hallgató>
+        <hallgató>
+            <név> Kerek Ernő </név>
+            <lakcím> Fenyves u. 141 </lakcím>
+        </hallgató>
+    </hallgatók>
+    <helyszín>
+        Miskolc, Művelődési ház
+    </helyszín>
+    <előadó>
+        <név> Kerekes Ferenc </név>
+        <adószám> 123456789 </adószám>
+        <lakcím> Áfonyás u. 123 4/1 </lakcím>
+    </előadó>
+    <dátum> 2022. 10. 12</dátum>
+</konferencia>
