@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+<!-- Egyszerű típusok kigyűjtése, saját típusok meghatározása, megszorítás -->
+<xs:element name="ár" type="xs:positiveInteger"/>
+<xs:element name="raktárba_érkezés" type="xs:date"/>
+<xs:element name="márka" type="xs:string"/>
+<xs:element name="név" type="xs:string"/>
+<xs:element name="várható_érkezés" type="xs:date"/>
+<xs:element name="csomagolás_típusa" type="xs:string"/>
+<xs:element name="Helyzet" type="xs:string"/>
+<xs:element name="VásárlásIdőpontja" type="xs:date"/>
+<xs:element name="VásároltTermék" type="xs:string"/>
+<xs:element name= "Telefonszám" type="TelefonszámTípus"/>
+
+
+<xs:simpleType name="TelefonszámTípus">
+    <xs:restriction base="xs:string">
+        <xs:pattern value="\d{4}-\d{3}-\d{4}" />
+    </xs:restriction>
+</xs:simpleType>
+
+<!--Komplex típusokhoz saját típus meghatározása, sorrendiség, számosság etc. -->
+
+<xs:complexType name="raktárTípus">
+    <xs:sequence>
+        <xs:element ref="ár" />
+        <xs:element ref="raktárba_érkezés" maxOccurs="1" />
+        <xs:element name="cím">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="Isz" type="xs:integer" />
+                    <xs:element name="Város" type="xs:string" />
+                    <xs:element name="Utca" type="xs:string" />
+                    <xs:element name="házszám" type="xs:integer" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+    </xs:sequence>
+    <xs:attribute name="raktár_id" type="xs:integer" use="required" />
+</xs:complexType>
+
+
+<xs:complexType name="GyárihibásTípus">
+    <xs:sequence>
+        <xs:element ref="ár" />
+        <xs:element ref="márka" maxOccurs="1" />
+        <xs:element ref="név" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="gyárihibás_id" type="xs:integer" use="required" />
+    <xs:attribute name="raktár" type="xs:integer" use="required" />
+</xs:complexType>
+
+<xs:complexType name="B_RTípus">
+    <xs:attribute name="darabszám" type="xs:integer" use="required" />
+    <xs:attribute name="raktár" type="xs:integer" use="required" />
+    <xs:attribute name="beszállító" type="xs:integer" use="required" />
+</xs:complexType>
+
+<xs:complexType name="beszállítóTípus">
+    <xs:sequence>
+        <xs:element ref="várható_érkezés" maxOccurs="1"/>
+        <xs:element ref="ár" />
+        <xs:element ref="csomagolás_típusa" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="raktár" type="xs:integer" use="required" />
+    <xs:attribute name="beszállító_id" type="xs:integer" use="required" />
+</xs:complexType>
+
+<xs:complexType name="futárTípus">
+    <xs:sequence>
+        <xs:element ref="Helyzet" maxOccurs="1"/>
+        <xs:element ref="várható_érkezés" maxOccurs="1" />
+        <xs:element ref="ár" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="Rendelés_szám" type="xs:integer" use="required" />
+    <xs:attribute name="raktár" type="xs:integer" use="required" />
+</xs:complexType>
+
+<xs:complexType name="ügyfélTípus">
+    <xs:sequence>
+        <xs:element ref="VásárlásIdőpontja" maxOccurs="1" />
+        <xs:element ref="VásároltTermék" maxOccurs="unbounded"/>
+        <xs:element ref="Telefonszám" minOccurs="1" maxOccurs="unbounded" />
+        <xs:element name="cím">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="Isz" type="xs:integer" />
+                    <xs:element name="Város" type="xs:string" />
+                    <xs:element name="Utca" type="xs:string" />
+                    <xs:element name="házszám" type="xs:integer" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Csomagszám" type="xs:integer" use="required" />
+    <xs:attribute name="futár" type="xs:integer" use="required" />
+</xs:complexType>
+
+<!-- Gyökérelemtől az elemek felhasználása -->
+
+<xs:element name="Csomag_követés_CBOYZF">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="raktár" type="raktárTípus" minOccurs="0" maxOccurs="100"/>
+                <xs:element name="Gyárihibás" type="GyárihibásTípus" minOccurs="0" maxOccurs="100"/>
+                <xs:element name="B_R" type="B_RTípus" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="beszállító" type="beszállítóTípus" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="futár" type="futárTípus" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="ügyfél" type="ügyfélTípus" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+         <!-- Elsődleges kulcsok -->
+
+        <xs:key name="raktár_kulcs">
+            <xs:selector xpath="raktár"/>
+            <xs:field xpath="@raktár_id"/>
+        </xs:key>
+
+        <xs:key name="gyárihibás_kulcs">
+            <xs:selector xpath="Gyárihibás"/>
+            <xs:field xpath="@gyárihibás_id"/>
+        </xs:key>
+
+        <xs:key name="B_R_kulcs">
+            <xs:selector xpath="B_R"/>
+            <xs:field xpath="@darabszám"/>
+        </xs:key>
+
+        <xs:key name="beszállító_kulcs">
+            <xs:selector xpath="beszállító"/>
+            <xs:field xpath="@beszállító_id"/>
+        </xs:key>
+
+        <xs:key name="futár_kulcs">
+            <xs:selector xpath="futár"/>
+            <xs:field xpath="@Rendelés_szám"/>
+        </xs:key>
+
+        <xs:key name="ügyfél_kulcs">
+            <xs:selector xpath="ügyfél"/>
+            <xs:field xpath="@Csomagszám"/>
+        </xs:key>
+
+        <!-- Idegen kulcsok -->
+
+        <xs:keyref name="gyárihibás_raktár_kulcs" refer="raktár_kulcs">
+            <xs:selector xpath="Gyárihibás"/>
+            <xs:field xpath="@raktár"/>
+        </xs:keyref>
+        
+        <xs:keyref name="beszállító_raktár_kulcs" refer="raktár_kulcs">
+            <xs:selector xpath="beszállító"/>
+            <xs:field xpath="@raktár"/>
+        </xs:keyref>
+
+        <xs:keyref name="B_R_raktár_kulcs" refer="raktár_kulcs">
+            <xs:selector xpath="B_R"/>
+            <xs:field xpath="@raktár"/>
+        </xs:keyref>
+        
+        
+        <xs:keyref name="B_R_beszállító_kulcs" refer="beszállító_kulcs">
+            <xs:selector xpath="B_R"/>
+            <xs:field xpath="@beszállító"/>
+        </xs:keyref>
+
+        <xs:keyref name="futár_raktár_kulcs" refer="raktár_kulcs">
+            <xs:selector xpath="futár"/>
+            <xs:field xpath="@raktár"/>
+        </xs:keyref>
+
+        <xs:keyref name="ügyfél_futár_kulcs" refer="futár_kulcs">
+            <xs:selector xpath="ügyfél"/>
+            <xs:field xpath="@futár"/>
+        </xs:keyref>
+        
+        <!-- Az 1:1 kapcsolat megvalósítás -->
+        <xs:unique name="Gyárihiba_Raktár_egyegy">
+            <xs:selector xpath="Gyárihibás"/>
+            <xs:field xpath="@raktár"/>
+        </xs:unique>
+
+    </xs:element>    
+
+</xs:schema>
