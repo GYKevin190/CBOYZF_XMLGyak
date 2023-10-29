@@ -1,5 +1,5 @@
 package hu.domparse.CBOYZF;
-//Szükséges importok használata,w3c ileltve DOM parserek behúzása
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,79 +8,70 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 public class DomReadCBOYZF {
-
     public static void main(String[] args) {
-    	//mivel IO művelet ezért a kivitelkezelés céljából try-catch blokba foglaljuk, itt még a parsert is dobhat exceptiont
         try {
-            // XML fájl betöltése
+        	//megnyitjuk az XML filet
             File xmlFile = new File("C:\\Egyetem\\CBOYZF_XMLGyak\\XMLTaskCBOYZF\\XMLCBOYZF.xml");
-            //Factory builder létrehozása
+            //létrehozzuk a szükséges factory buildereket
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            //parseljük a megnyitott xml dokumentumot
             Document doc = dBuilder.parse(xmlFile);
-
-            // A gyökérelem megkeresése
+            //megkeressük a gyökér elemet
             Element rootElement = doc.getDocumentElement();
-
-            // XML fájl tartalmának kiírása a konzolra 
-            writeToConsole(rootElement, "");
-            // XML fájl tartalmának kiírása fájlba 
-            writeToFile(rootElement, "", "XMLCBOYZF1.xml");
-        } catch (ParserConfigurationException | IOException | org.xml.sax.SAXException e) {
-        	//esetleges kivétel kiírása konzolra.
+            //try-catch blokban folytatjuk a kiírást, mivel a fájlba írás I/O művelet
+            try (FileWriter writer = new FileWriter("XMLCBOYZF1.xml")) {
+                writeToConsoleAndFile(writer, rootElement, "");
+            }
+        	} catch (ParserConfigurationException | IOException | org.xml.sax.SAXException e) {
+        		//kiírjuk a felmerülő kivételeket (parser,Io,SAX exception)
             e.printStackTrace();
-        }
+        	}
     }
 
-    // Rekurzív metódus a konzolra történő kiírásra
-    public static void writeToConsole(Node node, String indent) {
-    	//Lekérjük a node típusát, megnézzük valid típus-e és ha igen, kiíratjuk a nevét, valamit közt (indent)-et rakunk bele
-        if (node.getNodeType() == Node.ELEMENT_NODE) {
-            System.out.println(indent + "<" + node.getNodeName() + ">");
-            indent += "    ";
-        }
-        
-        //lekérjuk az elem "gyerek" elemeinek listáját, olyan típusok esetén lehet szükséges ilyesmi amikor egy típus más típusokat tartalmaz 
-        NodeList childNodes = node.getChildNodes();
-        //for ciklussal kiíratjuk ezeket az elemeket
-        for (int i = 0; i < childNodes.getLength(); i++) {
-        	//meghívjuk ugyan ezt a metódust a gyerek elemekre is, mivel ugyan azt a node struktúrát használják
-            writeToConsole(childNodes.item(i), indent);
-        }
-        
-        //Ugyan azt végezzük el mint a 41.sorban, csak ügyelve arra hogy ez az elem vége, ennek megfelelően indentelve
-        if (node.getNodeType() == Node.ELEMENT_NODE) {
-            System.out.println(indent + "</" + node.getNodeName() + ">");
-        }
-    }
-
-    // Rekurzív metódus az fájlba történő kiírásra
-    public static void writeToFile(Node node, String indent, String filename) {
-    	//mivel IO művelet ezért a kivitelkezelés céljából try-catch blokba foglaljuk
-        try (FileWriter writer = new FileWriter(filename, true)) {
-        	//Itt a léynegi művelet ugyan az mint a 41.sorban, a küönbség abban áll hogy a console helyett, a write.write parancsal írjuk fájlba.
+    public static void writeToConsoleAndFile(FileWriter writer, Node node, String indent) {
+    	//try-catch blokban folytatjuk a kiírást, mivel a fájlba írás I/O művelet
+        try {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
+            	// a node a gyökérelemünk, kiíratjuk a nevét a fájl elejére, az indent illet < > jelek a formázáshoz szükségesek
+                System.out.println(indent + "<" + node.getNodeName() + ">");
                 writer.write(indent + "<" + node.getNodeName() + ">\n");
                 indent += "    ";
+            } else if (node.getNodeType() == Node.TEXT_NODE) {
+            	//ha szzöveges node kiírjuk a hozzá tartozó szöveget is, amit egy string változóban trim-elünk le
+                Text textNode = (Text) node;
+                String nodeValue = textNode.getWholeText().trim();
+                //megnézzük nem-e ürés az adott elem
+                if (!nodeValue.isEmpty()) {
+                	 //konzolra írjuk az eredményt
+                    System.out.println(indent + nodeValue);
+                  //fájlba írjuk az eredményt
+                    writer.write(indent + nodeValue + "\n");
+                }
             }
-
+            
+            //megnézzük az elemenek van-e gyerek elem-e
             NodeList childNodes = node.getChildNodes();
+            //ha van akkor azon is végigmegyünk megint, rekurzívan ismét.
             for (int i = 0; i < childNodes.getLength(); i++) {
-            	//a 65.sorban található magyarázat
-                writeToFile(childNodes.item(i), indent, filename);
+                writeToConsoleAndFile(writer, childNodes.item(i), indent);
             }
 
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-            	//a 65.sorban található magyarázat
+            	//beállítjuk megfelelően a formázást fájl esetére is
+                indent = indent.substring(0, indent.length() - 4); // Visszaállítjuk az indentálást
+                //konzolra írjuk az eredményt
+                System.out.println(indent + "</" + node.getNodeName() + ">");
+                //fájlba írjuk az eredményt
                 writer.write(indent + "</" + node.getNodeName() + ">\n");
             }
         } catch (IOException e) {
-        	//esetleges kivétel kiírása konzolra.
+        	//kiírjuk a felmerülő kivételeket
             e.printStackTrace();
         }
     }
