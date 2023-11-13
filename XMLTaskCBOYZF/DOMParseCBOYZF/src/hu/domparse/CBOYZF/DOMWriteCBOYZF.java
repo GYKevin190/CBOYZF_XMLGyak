@@ -13,7 +13,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class DomReadCBOYZF {
+public class DOMWriteCBOYZF {
     public static void main(String[] args) {
         try {
             File xmlFile = new File("C:\\Egyetem\\CBOYZF_XMLGyak\\XMLTaskCBOYZF\\XMLCBOYZF.xml");
@@ -29,7 +29,7 @@ public class DomReadCBOYZF {
             NodeList futarList = doc.getElementsByTagName("futár");
             NodeList ugyfelList = doc.getElementsByTagName("ügyfél");
 
-            File outputFile = new File("C:\\Egyetem\\CBOYZF_XMLGyak\\XMLTaskCBOYZF\\CBOYZF_Output.xml");
+            File outputFile = new File("C:\\Egyetem\\CBOYZF_XMLGyak\\XMLTaskCBOYZF\\XMLCBOYZF1.xml");
             FileWriter writer = new FileWriter(outputFile);
             PrintWriter consoleWriter = new PrintWriter(System.out, true);
 
