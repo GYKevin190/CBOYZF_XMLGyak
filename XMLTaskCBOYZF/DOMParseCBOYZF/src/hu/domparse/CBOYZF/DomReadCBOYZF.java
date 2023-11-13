@@ -2,16 +2,18 @@ package hu.domparse.CBOYZF;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.util.StringJoiner;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 public class DomReadCBOYZF {
     public static void main(String[] args) {
@@ -22,6 +24,28 @@ public class DomReadCBOYZF {
             Document doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
 
+            File outputFile = new File("output2.xml");
+            PrintWriter writer = new PrintWriter(new FileWriter(outputFile, true));
+
+            // Kiírjuk az XML főgyökér elemét a konzolra és fájlba
+            Element rootElement = doc.getDocumentElement();
+            String rootName = rootElement.getTagName();
+            StringJoiner rootAttributes = new StringJoiner(" ");
+            NamedNodeMap rootAttributeMap = rootElement.getAttributes();
+
+            for (int i = 0; i < rootAttributeMap.getLength(); i++) {
+                Node attribute = rootAttributeMap.item(i);
+                rootAttributes.add(attribute.getNodeName() + "=\"" + attribute.getNodeValue() + "\"");
+            }
+            
+            
+            
+            System.out.print("<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n");
+            writer.print("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+
+            System.out.print("<" + rootName + " " + rootAttributes.toString() + "> \n");
+            writer.print("<" + rootName + " " + rootAttributes.toString() + "> \n");
+
             NodeList raktarList = doc.getElementsByTagName("raktár");
             NodeList gyarihibasList = doc.getElementsByTagName("Gyárihibás");
             NodeList brList = doc.getElementsByTagName("B_R");
@@ -29,118 +53,87 @@ public class DomReadCBOYZF {
             NodeList futarList = doc.getElementsByTagName("futár");
             NodeList ugyfelList = doc.getElementsByTagName("ügyfél");
 
-            File outputFile = new File("C:\\Egyetem\\CBOYZF_XMLGyak\\XMLTaskCBOYZF\\CBOYZF_Output.xml");
-            FileWriter writer = new FileWriter(outputFile);
-            PrintWriter consoleWriter = new PrintWriter(System.out, true);
+            // Kiírjuk az XML-t a konzolra megtartva az eredeti formázást
+            printNodeList(raktarList, writer);
+            System.out.println("");
+            writer.println("");
+            printNodeList(gyarihibasList, writer);
+            System.out.println("");
+            writer.println("");
+            printNodeList(brList, writer);
+            System.out.println("");
+            writer.println("");
+            printNodeList(beszallitoList, writer);
+            System.out.println("");
+            writer.println("");
+            printNodeList(futarList, writer);
+            System.out.println("");
+            writer.println("");
+            printNodeList(ugyfelList, writer);
 
-            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            writer.write("<Csomag_követés_CBOYZF xmlns:xs=\"http://www.w3.org/2001/XMLSchema-instance\" xs:noNamespaceSchemaLocation=\"XMLSchemaCBOYZF.xsd\">\n");
+            // Zárjuk le az XML gyökér elemét
+            System.out.println("</" + rootName + ">");
+            writer.append("</" + rootName + ">");
 
-            for (int i = 0; i < raktarList.getLength(); i++) {
-                Node raktar = raktarList.item(i);
-                String raktarString = nodeToString(raktar);
-                writer.write("    " + raktarString);
-                consoleWriter.println("    " + raktarString);
-            }
-
-            for (int i = 0; i < gyarihibasList.getLength(); i++) {
-                Node gyarihibas = gyarihibasList.item(i);
-                String gyarihibasString = nodeToString(gyarihibas);
-                writer.write("    " + gyarihibasString);
-                consoleWriter.println("    " + gyarihibasString);
-            }
-
-            for (int i = 0; i < brList.getLength(); i++) {
-                Node br = brList.item(i);
-                String brString = nodeToString(br);
-                writer.write("    " + brString);
-                consoleWriter.println("    " + brString);
-            }
-
-            for (int i = 0; i < beszallitoList.getLength(); i++) {
-                Node beszallito = beszallitoList.item(i);
-                String beszallitoString = nodeToString(beszallito);
-                writer.write("    " + beszallitoString);
-                consoleWriter.println("    " + beszallitoString);
-            }
-
-            for (int i = 0; i < futarList.getLength(); i++) {
-                Node futar = futarList.item(i);
-                String futarString = nodeToString(futar);
-                writer.write("    " + futarString);
-                consoleWriter.println("    " + futarString);
-            }
-
-            for (int i = 0; i < ugyfelList.getLength(); i++) {
-                Node ugyfel = ugyfelList.item(i);
-                String ugyfelString = nodeToString(ugyfel);
-                writer.write("    " + ugyfelString);
-                consoleWriter.println("    " + ugyfelString);
-            }
-
-            writer.write("</Csomag_követés_CBOYZF>");
             writer.close();
-
-            //System.out.println("A XML tartalom sikeresen ki lett írva a fájlba: " + outputFile.getAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    private static String nodeToString(Node node) {
-        return nodeToString(node, 0);
+    
+    // Rekurzív függvény a NodeList tartalmának kiírására
+    private static void printNodeList(NodeList nodeList, PrintWriter writer) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            printNode(node, 0, writer);
+            System.out.println(""); // Üres sor hozzáadása az elemek között
+            writer.println(""); // Üres sor hozzáadása a fájlban az elemek között
+        }
     }
 
-    private static String nodeToString(Node node, int depth) {
-        StringBuilder result = new StringBuilder();
-
+    // Rekurzív függvény a Node tartalmának kiírására
+    private static void printNode(Node node, int indent, PrintWriter writer) {
         if (node.getNodeType() == Node.ELEMENT_NODE) {
-            result.append(getIndentation(depth));
-            result.append("<");
-            result.append(node.getNodeName());
+            Element element = (Element) node;
+            String nodeName = element.getTagName();
+            StringJoiner attributes = new StringJoiner(" ");
+            NamedNodeMap attributeMap = element.getAttributes();
 
-            if (node.hasAttributes()) {
-                for (int i = 0; i < node.getAttributes().getLength(); i++) {
-                    Node attribute = node.getAttributes().item(i);
-                    result.append(" ");
-                    result.append(attribute.getNodeName());
-                    result.append("=\"");
-                    result.append(attribute.getNodeValue());
-                    result.append("\"");
+            for (int i = 0; i < attributeMap.getLength(); i++) {
+                Node attribute = attributeMap.item(i);
+                attributes.add(attribute.getNodeName() + "=\"" + attribute.getNodeValue() + "\"");
+            }
+
+            System.out.print(getIndentString(indent));
+            System.out.print("<" + nodeName + " " + attributes.toString() + ">");
+
+            writer.print(getIndentString(indent));
+            writer.print("<" + nodeName + " " + attributes.toString() + ">");
+
+            NodeList children = element.getChildNodes();
+            if (children.getLength() == 1 && children.item(0).getNodeType() == Node.TEXT_NODE) {
+                System.out.print(children.item(0).getNodeValue());
+                writer.print(children.item(0).getNodeValue());
+            } else {
+                System.out.println();
+                writer.println();
+                for (int i = 0; i < children.getLength(); i++) {
+                    printNode(children.item(i), indent + 1, writer);
                 }
+                System.out.print(getIndentString(indent));
+                writer.print(getIndentString(indent));
             }
-
-            result.append(">\n");
-        } else if (node.getNodeType() == Node.TEXT_NODE) {
-            String text = node.getTextContent().trim();
-            if (!text.isEmpty()) {
-                result.append(getIndentation(depth));
-                result.append(text);
-                result.append("\n");
-            }
+            System.out.println("</" + nodeName + ">");
+            writer.println("</" + nodeName + ">");
         }
-
-        NodeList childNodes = node.getChildNodes();
-        for (int i = 0; i < childNodes.getLength(); i++) {
-            Node childNode = childNodes.item(i);
-            result.append(nodeToString(childNode, depth + 1));
-        }
-
-        if (node.getNodeType() == Node.ELEMENT_NODE) {
-            result.append(getIndentation(depth));
-            result.append("</");
-            result.append(node.getNodeName());
-            result.append(">\n");
-        }
-
-        return result.toString();
     }
 
-    private static String getIndentation(int depth) {
-        StringBuilder indentation = new StringBuilder();
-        for (int i = 0; i < depth; i++) {
-            indentation.append("    ");
+    // Segédmetódus az indentáláshoz
+    private static String getIndentString(int indent) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < indent; i++) {
+            sb.append("  "); // 2 spaces per indent level
         }
-        return indentation.toString();
+        return sb.toString();
     }
 }
