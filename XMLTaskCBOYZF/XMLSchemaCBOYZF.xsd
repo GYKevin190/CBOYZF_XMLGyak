@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"> 
 
 
 <!-- Egyszerű típusok kigyűjtése, saját típusok meghatározása, megszorítás -->
@@ -28,7 +28,7 @@
         <xs:element ref="ár" />
         <xs:element ref="raktárba_érkezés" maxOccurs="1" />
         <xs:element name="cím">
-            <xs:complexType>
+            <xs:complexType> 
                 <xs:sequence>
                     <xs:element name="Isz" type="xs:integer" />
                     <xs:element name="Város" type="xs:string" />
@@ -149,17 +149,13 @@
             <xs:selector xpath="Gyárihibás"/>
             <xs:field xpath="@raktár"/>
         </xs:keyref>
-        
-        <xs:keyref name="beszállító_raktár_kulcs" refer="raktár_kulcs">
-            <xs:selector xpath="beszállító"/>
-            <xs:field xpath="@raktár"/>
-        </xs:keyref>
+
 
         <xs:keyref name="B_R_raktár_kulcs" refer="raktár_kulcs">
             <xs:selector xpath="B_R"/>
             <xs:field xpath="@raktár"/>
         </xs:keyref>
-        
+
         
         <xs:keyref name="B_R_beszállító_kulcs" refer="beszállító_kulcs">
             <xs:selector xpath="B_R"/>

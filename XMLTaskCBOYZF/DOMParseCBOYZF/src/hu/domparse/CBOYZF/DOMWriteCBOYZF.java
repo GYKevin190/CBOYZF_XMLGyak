@@ -74,7 +74,7 @@ public class DOMWriteCBOYZF {
       transformer.setOutputProperty("{https://xml.apache.org/xslt}indent-amount", "2");
 
       DOMSource source = new DOMSource(doc);
-      File myFile = new File("XMLCBOYZF1.xml");
+      File myFile = new File("XMLCBOYZF2.xml");
       StreamResult file = new StreamResult(myFile);
       transformer.transform(source, file);
 
