@@ -1,0 +1,8 @@
+hallgato: 
+        Gyáni Kevin Zsolt
+        2002
+        
+    
+  hnev: Gyáni Kevin Zsolt
+  szulev: 2002
+  szak: 
