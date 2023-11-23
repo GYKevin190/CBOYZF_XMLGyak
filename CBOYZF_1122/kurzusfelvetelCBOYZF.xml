@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<C0LLER_kurzusfelvetel tanev="3" egyetem="ME">
+    <hallgato>
+        <hnev>Gyáni Kevin Zsolt</hnev>
+        <szulev>2002</szulev>
+        <szak evf="3">Programtervező informatika</szak>
+    </hallgato>
+    <kurzusok>
+        <kurzus id="GEIAL331-B" nyelv="angol">
+            <kurzusnev>Web technológiák 1</kurzusnev>
+            <kredit>5</kredit>
+            <hely>XXX A1 III. em. 305</hely>
+            <idopont>Hétfő 14:00-16:00</idopont>
+            <oktato>Agárdi Anita</oktato>
+        </kurzus>
+        <kurzus id="GEIAK130-B">
+            <kurzusnev>Mesterséges Intelligencia Alapjai</kurzusnev>
+            <kredit>5</kredit>
+            <hely>XXXII A1 magasfsz</hely>
+            <idopont>Kedd 10:00-12:00</idopont>
+            <oktato>Kunné Dr. Tamás Judit</oktato>
+            <oraado>Fazekas Levente</oraado>
+        </kurzus>
+        <kurzus id="GEIAL332-B">
+            <kurzusnev>Adatkezelés XML-ben</kurzusnev>
+            <kredit>5</kredit>
+            <hely>XXXII A1 magasfsz</hely>
+            <idopont>Kedd 12:00-14:00</idopont>
+            <oktato>Dr. Bednarik László</oktato>
+        </kurzus>
+        <kurzus id="GEMAK234-B" nyelv="francia">
+            <kurzusnev>Algoritmusok és vizsgálatuk</kurzusnev>
+            <kredit>5</kredit>
+            <hely>A1/320 A1 III. em. 320</hely>
+            <idopont>Kedd 14:00-16:00</idopont>
+            <oktato>Dr. Házy Attila</oktato>
+        </kurzus>
+        <kurzus id="GEIAL315-B" nyelv="német">
+            <kurzusnev>Vállalati információs rendszerek fejlesztése</kurzusnev>
+            <kredit>5</kredit>
+            <hely>In/101 In I. e. 101</hely>
+            <idopont>Szerda 14:00-16:00</idopont>
+            <oktato>Dr. Sasvári Péter</oktato>
+        </kurzus>
+    </kurzusok>
+</C0LLER_kurzusfelvetel>
