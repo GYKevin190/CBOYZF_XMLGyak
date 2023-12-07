@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="fesztival">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="fesztival" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="nev" type="xs:string" />
+                            <xs:element name="helyszin" minOccurs="1" maxOccurs="1">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="telepules" type="xs:string" />
+                                        <xs:element name="terulet" type="xs:string" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="fkod" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="alkalmazott" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="nev" type="xs:string" />
+                            <xs:element name="kozvelemeny" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="akod" type="xs:string" use="required"/>
+                        <xs:attribute name="f_a" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="fellepo" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="nev" type="xs:string" />
+                            <xs:element name="mufaj" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="fkod" type="xs:string" use="required"/>
+                        <xs:attribute name="f_fl" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="tulajdonos" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="nev" type="xs:string" />
+                            <xs:element name="alapitas" type="xs:date" />
+                        </xs:sequence>
+                        <xs:attribute name="tkod" type="xs:string" use="required"/>
+                        <xs:attribute name="f_t" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="bar" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="nev" type="xs:string" />
+                            <xs:element name="ital" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="bkod" type="xs:string" use="required"/>
+                        <xs:attribute name="f_t" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="kozvelemeny" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="kerdezo" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="kkod" type="xs:string" use="required"/>
+                        <xs:attribute name="f_t" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="nyelvtudas" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="nyelv" type="xs:string" />
+                            <xs:element name="szint" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="nykod" type="xs:string" use="required"/>
+                        <xs:attribute name="f_t" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="resztvevo" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="nev" type="xs:string" />
+                            <xs:element name="telepules" type="xs:string" />
+                            <xs:element name="diakigazolvany" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="rkod" type="xs:string" use="required"/>
+                        <xs:attribute name="f_r" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

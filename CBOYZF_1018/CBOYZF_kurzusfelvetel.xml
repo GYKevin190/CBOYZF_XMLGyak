@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE GYK_kurzusfelvetel>
+
+<CBOYF_kurzusfelvetel tanev="2023_2024 I." egyetem="ME">
+  <hallgato id="AQYO8L">
+    <hnev>Stremler László</hnev>
+    <szulev>2001-06-09</szulev>
+    <szak evf="5"> Programtervező Informatikus </szak>
+  </hallgato>
+
+  <kurzusok>
+    <kurzus id="GEIAL331-B" nyelv="magyar">
+      <kurzusnev>WEB technológiák 1</kurzusnev>
+      <kredit>5</kredit>
+      <hely>XXX.ea</hely>
+      <idopont>Hétfő 14:00-15:30</idopont>
+      <oktato>Agárdi Anita</oktato>
+    </kurzus>
+    <kurzus id="GEIAK130-B" nyelv="magyar">
+        <kurzusnev>Mesterséges intelligencia alapjai</kurzusnev>
+        <kredit>5</kredit>
+        <hely>XXXII.ea</hely>
+        <idopont>Kedd 10:00-11:30</idopont>
+        <oktato>Kunné Dr. Tamás Judit,</oktato>
+        <oraado>Fazekas Levente Áron</oraado>
+      </kurzus>
+    <kurzus id="GEIAL315-B">
+      <kurzusnev>Vállalati Információs Rendszerek Fejlesztése</kurzusnev>
+      <kredit>5</kredit>
+      <hely>In. 103</hely>
+      <idopont>Szerda 14:00-15:30</idopont>
+      <oktato>Dr. Sasvári Péter</oktato>
+    </kurzus>
+    <kurzus id="GEMAK234-B" jovahagyas="igen">
+      <kurzusnev>Algoritmusok és vizsgálatuk</kurzusnev>
+      <kredit>5</kredit>
+      <hely>A1. 315</hely>
+      <idopont>Kedd 14:00-15:30</idopont>
+      <oktato>Dr. Házy Attila</oktato>
+    </kurzus>
+    <kurzus id="GEIAL332-B">
+      <kurzusnev>Adatkezelés XML-ben</kurzusnev>
+      <kredit>5</kredit>
+      <hely>XXXII. ea</hely>
+      <idopont>Kedd 12:00-13:30</idopont>
+      <oktato>Dr. Bednarik László</oktato>
+    </kurzus>
+  </kurzusok>
+</CBOYF_kurzusfelvetel>
