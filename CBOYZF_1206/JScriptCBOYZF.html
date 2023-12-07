@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Órarend</title>
+</head>
+
+<body>
+    <h1>Órarend</h1>
+    <div id="output"></div>
+
+    <script>
+        // Read JSON file
+        fetch('kurzusfelvetelAQYO8L.json')
+            .then(response => response.json())
+            .then(data => {
+                DisplayJSON(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        function DisplayJSON(data) {
+            var outputDiv = document.getElementById('output');
+
+            outputDiv.innerHTML += '<h2>Hallgatói információk</h2>';
+            outputDiv.innerHTML += '<p>Név: ' + data.AQYO8L_kurzusfelvetel.hallgato.hnev + '</p>';
+            outputDiv.innerHTML += '<p>Születési idő: ' + data.AQYO8L_kurzusfelvetel.hallgato.szulev + '</p>';
+            outputDiv.innerHTML += '<p>Szak: ' + data.AQYO8L_kurzusfelvetel.hallgato.szak + '</p>';
+
+
+            outputDiv.innerHTML += '<h2>Felvett tárgyak</h2>';
+            var courses = data.AQYO8L_kurzusfelvetel.kurzusok.kurzus;
+
+            // Loop through courses and display each one
+            for (var i = 0; i < courses.length; i++) {
+                outputDiv.innerHTML += '<div>';
+                outputDiv.innerHTML += '<p><strong>Kurzus neve:</strong> ' + courses[i].kurzusnev + '</p>';
+                outputDiv.innerHTML += '<p><strong>Kredit:</strong> ' + courses[i].kredit + '</p>';
+                outputDiv.innerHTML += '<p><strong>Helyszín:</strong> ' + courses[i].hely + '</p>';
+                outputDiv.innerHTML += '<p><strong>Időpont:</strong> ' + courses[i].idopont + '</p>';
+                outputDiv.innerHTML += '<p><strong>Oktató:</strong> ' + courses[i].oktato + '</p>';
+                if (courses[i].oraado) {
+                    outputDiv.innerHTML += '<p><strong>Óraadó:</strong> ' + courses[i].oraado + '</p>';
+                }
+                outputDiv.innerHTML += '</div>';
+            }
+        }
+    </script>
+</body>
+
+</html>

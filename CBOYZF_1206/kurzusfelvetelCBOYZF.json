@@ -1,0 +1,49 @@
+{
+    "CBOYZF_kurzusfelvetel": {
+      "hallgato": {
+        "hnev": "Gyáni Kevin Zsolt",
+        "szulev": "2002-10-11",
+        "szak": "Programtervező Informatikus"
+      },
+      "kurzusok": {
+        "kurzus": [
+          {
+            "kurzusnev": "WEB technológiák 1",
+            "kredit": 5,
+            "hely": "XXX.ea",
+            "idopont": "Hétfő 14:00-15:30",
+            "oktato": "Agárdi Anita"
+          },
+          {
+            "kurzusnev": "Mesterséges intelligencia alapjai",
+            "kredit": 5,
+            "hely": "XXXII.ea",
+            "idopont": "Kedd 10:00-11:30",
+            "oktato": "Kunné Dr. Tamás Judit,",
+            "oraado": "Fazekas Levente Áron"
+          },
+          {
+            "kurzusnev": "Vállalati Információs Rendszerek Fejlesztése",
+            "kredit": 5,
+            "hely": "In. 103",
+            "idopont": "Szerda 14:00-15:30",
+            "oktato": "Dr. Sasvári Péter"
+          },
+          {
+            "kurzusnev": "Algoritmusok és vizsgálatuk",
+            "kredit": 5,
+            "hely": "A1. 315",
+            "idopont": "Kedd 14:00-15:30",
+            "oktato": "Dr. Házy Attila"
+          },
+          {
+            "kurzusnev": "Adatkezelés XML-ben",
+            "kredit": 5,
+            "hely": "XXXII. ea",
+            "idopont": "Kedd 12:00-13:30",
+            "oktato": "Dr. Bednarik László"
+          }
+        ]
+      }
+    }
+  }
